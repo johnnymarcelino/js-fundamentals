@@ -1,1 +1,1 @@
-This repository is to learn javascript fundamentals.
+This repository is to learn MongoDB Database.
