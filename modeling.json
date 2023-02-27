@@ -1,0 +1,96 @@
+
+{
+    "00": "A modelagem de dados para o MongoDB é um pouco diferente da modelagem para bancos de dados relacionais, porque o MongoDB é um banco de dados NoSQL orientado a documentos. Enquanto em um banco de dados relacional, os dados são organizados em tabelas com linhas e colunas, no MongoDB, os dados são organizados em documentos JSON (JavaScript Object Notation) dentro de coleções.",
+
+    "01": "Aqui estão algumas considerações importantes a ter em mente ao modelar dados para o MongoDB:",
+
+    "02": "Pense em termos de documentos: Em vez de pensar em termos de tabelas e linhas, pense em termos de documentos JSON e seus atributos (chave-valor). Cada documento representa uma entidade, como um usuário, um pedido ou um produto.",
+
+    "03": "Denormalize os dados: A denormalização é comum no MongoDB, pois cada documento pode conter informações de várias tabelas em um banco de dados relacional. Portanto, é importante pensar em como organizar os dados em cada documento para que as informações necessárias possam ser acessadas com eficiência.",
+
+    "04": "Considere o tamanho do documento: O MongoDB tem um limite de tamanho de documento de 16 MB, portanto, se você tiver documentos muito grandes, poderá enfrentar problemas de desempenho. É importante modelar os documentos de maneira a manter seu tamanho sob controle.",
+
+    "05": "Use chaves estrangeiras: O MongoDB permite que você use referências a documentos em outras coleções, como chaves estrangeiras em um banco de dados relacional. Isso pode ajudar a reduzir a redundância e a melhorar o desempenho em algumas situações.",
+
+    "06": "Pense em consultas: Quando modelar seus dados, considere as consultas que precisará executar com frequência e organize seus dados para que essas consultas possam ser realizadas de maneira eficiente. Isso pode envolver a criação de índices ou a organização dos dados em uma determinada ordem.",
+
+    "07": "Escolha as estruturas de dados corretas: O MongoDB oferece várias estruturas de dados diferentes para armazenar dados, incluindo matrizes, objetos embutidos e objetos de referência. Escolha a estrutura de dados certa para cada atributo com base nas necessidades da sua aplicação.",
+
+    "001": "Ao modelar dados para o MongoDB, é importante pensar de maneira diferente do que em um banco de dados relacional e levar em consideração as peculiaridades do MongoDB. O objetivo é organizar os dados de uma maneira que seja eficiente e eficaz para a aplicação que está sendo desenvolvida."
+}
+
+{
+    "00": "Exemplos: ",
+
+
+    "01": "Suponha que estamos desenvolvendo uma aplicação de comércio eletrônico, e precisamos armazenar informações sobre os produtos, os pedidos e os usuários. Aqui está um exemplo de como modelar esses dados no MongoDB:",
+
+
+    "02": "Coleção de Produtos:"
+
+    {
+        "_id": ObjectId("617b1f40b7e667f773d73ef7"),
+        "name": "Camisa Polo",
+        "description": "Camisa polo de algodão",
+        "price": 50.0,
+        "stock": 100,
+        "categories": ["Roupas", "Masculino"]
+    },
+      
+    "03": "Neste exemplo, cada documento representa um produto e inclui informações como o nome, a descrição, o preço e o estoque do produto. Também incluímos uma matriz de categorias para que possamos filtrar os produtos por categoria.",
+
+
+
+    "04": "Coleção de Pedidos:"
+
+    {
+        "_id": ObjectId("617b1f40b7e667f773d73ef8"),
+        "user_id": ObjectId("617b1f40b7e667f773d73ef9"),
+        "items": [
+          {
+            "product_id": ObjectId("617b1f40b7e667f773d73ef7"),
+            "quantity": 2,
+            "price": 50.0
+          },
+          {
+            "product_id": ObjectId("617b1f40b7e667f773d73efa"),
+            "quantity": 1,
+            "price": 20.0
+          }
+        ],
+        "total_price": 120.0,
+        "status": "Enviado"
+    },
+
+    "05": "Neste exemplo, cada documento representa um pedido e inclui informações sobre o usuário que fez o pedido, os itens do pedido e o status do pedido. Cada item de pedido é representado como um documento aninhado que inclui o ID do produto, a quantidade e o preço.",
+
+
+
+    "06": "Coleção de Usuários:"
+
+    {
+        "_id": ObjectId("617b1f40b7e667f773d73ef9"),
+        "name": "João Silva",
+        "email": "joao.silva@gmail.com",
+        "password": "s3nh4s3gur4",
+        "address": {
+          "street": "Rua do Comércio",
+          "number": 123,
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "01000-000"
+        },
+        "phone": "+55 (11) 99999-9999",
+        "orders": [
+          ObjectId("617b1f40b7e667f773d73ef8"),
+          ObjectId("617b1f40b7e667f773d73efb")
+        ]
+    },
+
+    "07": "Neste exemplo, cada documento representa um usuário e inclui informações como nome, e-mail, senha, endereço e telefone. Também incluímos uma matriz de pedidos para que possamos encontrar todos os pedidos feitos por um usuário específico.
+
+    Esses são apenas alguns exemplos de como modelar dados no MongoDB. É importante lembrar que a modelagem de dados no MongoDB é altamente dependente do caso de uso específico e das consultas que serão executadas."
+
+}
+
+

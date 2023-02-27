@@ -1,0 +1,17 @@
+{
+    "0": "Para se tornar um profissional pleno em MongoDB, é preciso ter uma compreensão aprofundada de vários conceitos e habilidades, incluindo:",
+
+    "1": "Modelagem de dados: compreender como modelar dados de forma eficiente para o MongoDB e como escolher a estratégia de modelagem mais adequada para diferentes tipos de dados.",
+
+    "2": "Consultas e agregações: dominar a sintaxe da linguagem de consulta e aprender a usar as operações de agregação para analisar dados de forma mais complexa.",
+        
+    "3": "Índices e otimização de consultas: saber como criar e gerenciar índices para melhorar o desempenho das consultas e entender como o otimizador de consultas do MongoDB trabalha.",
+        
+    "4": "Replicações e sharding: entender como configurar e gerenciar replicações e sharding, que permitem escalar horizontalmente o MongoDB.",
+        
+    "5": "Segurança: conhecer as melhores práticas de segurança do MongoDB, como autenticação, autorização, criptografia e auditoria.",
+        
+    "6": "Gerenciamento de bancos de dados: saber como gerenciar backups, restaurações, monitoramento, otimização e ajuste de desempenho do MongoDB",
+        
+    "7": "Integração com outras tecnologias: entender como o MongoDB se integra com outras tecnologias, como frameworks de aplicativos, ferramentas de ETL, plataformas de nuvem e outros bancos de dados."
+}

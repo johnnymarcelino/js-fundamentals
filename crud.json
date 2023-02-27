@@ -1,0 +1,17 @@
+{
+    "00": "Create -> Criar um recurso",
+    "01": "insert({})",
+    "02": "insertOne({})",
+    "03": "insertMany([{}, {}, {}])",
+    "04": "Read -> Ler o recurso",
+    "05": "find(<query>, <projection>)",
+    "06": "findOne(<query>, <projection>)",
+    "07": "Update -> Atualizar o recurso",
+    "08": "Create -> Criar um recurso",
+    "09": "updateOne(<query>, <update>, <options>)",
+    "10": "updateMany(<query>, <update>, <options>)",
+    "11": "Delete -> Deletar o recurso",
+    "12": "deleteOne(<query>)",
+    "13": "deleteMany(<query>)"
+}
+

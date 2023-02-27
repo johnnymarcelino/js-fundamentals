@@ -1,0 +1,75 @@
+{
+    "1": "O MongoDB é um banco de dados NoSQL baseado em documentos, e possui sua própria linguagem de consulta. Abaixo estão alguns dos principais comandos do MongoDB:"
+}
+
+{
+    "0": "use <database>` - seleciona um banco de dados para uso",
+
+    "1": "db.<collection>.find() - Busca documentos em uma coleção.",
+
+    "2": "db.<collection>.insertOne(<document>) - Insere um único documento em uma coleção.",
+
+    "3": "db.<collection>.updateOne(<filter>, <update>) - Atualiza um único documento que atende aos critérios especificados no filtro.",
+
+    "4": "db.<collection>.deleteOne(<filter>) - Remove um único documento que atende aos critérios especificados no filtro.",
+
+    "5": "db.<collection>.aggregate(<pipeline>) - Executa uma operação de agregação em uma coleção.",
+
+    "6": "db.<collection>.createIndex(<keys>, <options>) - Cria um índice em uma coleção.",
+
+    "7": "db.<collection>.count() - Conta o número de documentos em uma coleção.",
+
+    "8": "db.dropDatabase() - Exclui um banco de dados inteiro.",
+
+    "9": "db.<collection>.drop() - Exclui uma coleção.",
+
+    
+    "10": "Esses são apenas alguns dos comandos mais comuns do MongoDB. A linguagem de consulta do MongoDB é bastante extensa e há muitos outros comandos disponíveis."
+}
+
+{
+    "0": "Aqui estão mais 20 comandos essenciais do MongoDB:",
+
+    "1": "show dbs:" "- Exibe todos os bancos de dados disponíveis.",
+
+    "2": "show collections - Exibe todas as coleções em um banco de dados.",
+
+    "3": "db.<collection>.findOne(<query>) - Retorna um único documento que atende aos critérios especificados na consulta.",
+
+    "4": "db.<collection>.insertMany(<documents>) - Insere vários documentos em uma coleção.",
+
+    "5": "db.<collection>.updateMany(<filter>, <update>) - Atualiza vários documentos que atendem aos critérios especificados no filtro.",
+
+    "6": "db.<collection>.deleteMany(<filter>) - Remove vários documentos que atendem aos critérios especificados no filtro.",
+
+    "7": "db.<collection>.distinct(<field>) - Retorna uma lista de valores distintos para um campo específico em uma coleção.",
+
+    "8": "db.<collection>.find().sort(<field>:<1|-1>) - Classifica os documentos em uma coleção em ordem crescente (1) ou decrescente (-1) com base em um campo específico.",
+
+    "9": "db.<collection>.find().limit(<number>) - Limita o número de documentos retornados em uma consulta.",
+
+    "10": "db.<collection>.find().skip(<number>) - Ignora os primeiros documentos especificados em uma consulta.",
+
+    "11": "db.<collection>.find().count() - Conta o número de documentos retornados em uma consulta.",
+
+    "12": "db.<collection>.find().pretty() - Formata a saída de uma consulta em um formato mais legível para humanos.",
+
+    "13": "db.<collection>.find(<query>).explain() - Retorna informações sobre como o MongoDB está processando uma consulta.",
+
+    "14": "db.<collection>.aggregate().group() - Agrupa documentos em uma coleção com base em um ou mais campos.",
+
+    "15": "db.<collection>.aggregate().project() - Seleciona campos específicos para serem retornados em uma operação de agregação.",
+
+   "16": "db.<collection>.aggregate().sort() - Classifica documentos em uma operação de agregação.",
+
+    "17": "db.<collection>.aggregate().match() - Filtra documentos em uma operação de agregação com base em um ou mais critérios.",
+
+    "18": "db.<collection>.createUser() - Cria um novo usuário para um banco de dados.",
+
+    "19": "db.<collection>.updateOne().upsert(<document>) - Insere um novo documento se ele não existir durante uma operação de atualização.",
+
+    "20": "db.<collection>.createIndex().drop() - Remove um índice de uma coleção.",
+
+    "21": "Esses comandos ajudam a realizar muitas operações comuns no MongoDB. No entanto, o MongoDB é uma plataforma rica e complexa, com muitos recursos e opções, então há muito mais para aprender além desses comandos básicos."
+}
+
