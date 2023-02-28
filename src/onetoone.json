@@ -1,0 +1,32 @@
+{
+    "0": "MER",
+    "1": "MODELO",
+    "2": "ENTIDADE E",
+    "3": "RELACIONAMENTO"
+}
+
+{
+    "0": "DER",
+    "1": "DIAGRAMA",
+    "2": "ENTIDADE E",
+    "3": "RELACIONAMENTO"
+}
+
+
+{
+    "id": 1,
+    "cpf": "123456798",
+    "nome": "Joaozinho",
+    "cidade": "São Paulo",
+    "Carterinha": {  // embedded document
+        "_id": 8,
+        "turma": "220A",
+        "ra": 1234
+    }
+}
+
+{
+    "One To One:": ,
+    "- Referencia": ,
+    "- Embedded Document":
+}

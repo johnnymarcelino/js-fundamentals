@@ -1,0 +1,68 @@
+{
+    "One To Many": 0,
+    "Referência: Ótimo quando o lado do muitos é realmente grande": 1,
+    "Embedded documents: Mais fácil para guardar e dar manutenção":
+},
+
+
+// POR EMBEDDED DOCUMENTS:
+
+// É RECOMENDADO POR REFERENCIA QUANDO SE TEM POUCOS FUNCIONARIOS PARA QUERIES
+
+{
+    "_id": 3,
+    "meta": 4000,
+    "nome": "Vendas",
+    "funcionarios": [  // ONE TO MANY POSSIBILITA USAR ARRAYS
+        {
+            "_id": 8,
+            "salario": 1400,
+            "turno": "tarde",
+            "cargo": "vendedor"
+        },
+        {
+            "_id": 12,
+            "salario": 1600,
+            "turno": "noite",
+            "cargo": "vendedor"
+        }
+    ]
+},
+
+
+// POR REFERENCIA
+
+// É RECOMENDADO POR REFERENCIA QUANDO SE TEM MUITOS FUNCIONARIOS PARA QUERIES
+
+// SETORES
+
+{
+    "_id": 7,
+    "meta": 4000,
+    "nome": "Vendas do Tráfego",
+}
+
+{
+    "_id": 12,
+    "meta": 4000,
+    "nome": "Vendas da Saúde",
+}
+
+// FUNCIONÁRIOS
+
+{
+    "_id": 8,
+    "salario": 1400,
+    "turno": "tarde",
+    "cargo": "vendedor",
+    "setor_id": 7
+
+},
+
+{
+    "_id": 12,
+    "salario": 1600,
+    "turno": "noite",
+    "cargo": "vendedor",
+    "setor_id": 12
+}
