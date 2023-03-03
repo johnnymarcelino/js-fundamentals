@@ -1,0 +1,20 @@
+importar dados usando shell do mongodb:
+
+mongoimport --db query --collection pokemon --type json --file pokemon.json
+
+
+
+expressão regex - encontrar documentos por determinada expressão
+
+- encontrar os primeiros caracteres começados com 'pi', sendo: /^<caracteres>/
+db.pokemon.find( {name: /^Pi/} ).pretty() 
+
+- encontrarquaisquer caracteres que tenha as letras com 'pi', sendo: /^<caracteres>/
+db.pokemon.find( {name: /Pi/} ).pretty() 
+
+
+
+regex => case sensitive
+
+- para ignorar os case sensitive, usar 'i' apos a expressão
+db.pokemon.find( {name: /^pi/i} ).pretty() 

@@ -1,3 +1,0 @@
-importar dados usando shell do mongodb:
-
-mongoimport --db query --collection pokemon --type json --file pokemon.json
