@@ -2,7 +2,7 @@ importar dados usando shell do mongodb:
 
 mongoimport --db query --collection pokemon --type json --file pokemon.json
 
-
+--------------------------------------------------------------------------------------------------------
 
 expressão regex - encontrar documentos por determinada expressão
 
@@ -12,6 +12,7 @@ db.pokemon.find( {name: /^Pi/} ).pretty()
 - encontrarquaisquer caracteres que tenha as letras com 'pi', sendo: /^<caracteres>/
 db.pokemon.find( {name: /Pi/} ).pretty() 
 
+--------------------------------------------------------------------------------------------------------
 
 
 regex => case sensitive
@@ -19,7 +20,7 @@ regex => case sensitive
 - para ignorar os case sensitive, usar 'i' apos a expressão
 db.pokemon.find( {name: /^pi/i} ).pretty() 
 
-
+--------------------------------------------------------------------------------------------------------
 
 
 consultas para arrays => $in ou $nin -> [<>, <>] = um ou outro
@@ -31,3 +32,12 @@ db.pokemon.find( {name: {$in: [/^pi/i, /^pu/i]}}, {_id: false, name: true} ).pre
 
 contagem:
 db.pokemon.find( {name: {$in: ["Pichu", "Pikachu"]}} ).pretty().count()
+
+
+--------------------------------------------------------------------------------------------------------
+
+
+realizar queries com uma determinada faixa de acordo com os valores especificados
+- valores exclusivos e inclusivos:
+
+db.pokemon.find( {defense: {$gt: 60, $lt: 72}}, {_id: 0, name: 1, defense: 1})

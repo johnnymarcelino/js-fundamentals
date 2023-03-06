@@ -1,0 +1,23 @@
+- buscando por valores especificos por faixas
+
+db.pokemon.find({
+    defense: {
+        $gt: 60,
+        $lt: 72,
+    },
+    { _id: 0, name: 1, defense: 1
+    }
+});
+
+- combinando operadores logicos
+
+db.pokemon.find({$or: [ // $or: [querie, querie, querie], - exemplo
+        {defense: {$gt: 60, $lt: 72
+            }
+        },
+        {defense: 100
+        }
+    ]
+},
+{ _id: 0, name: 1, defense: 1
+});
