@@ -18,3 +18,16 @@ regex => case sensitive
 
 - para ignorar os case sensitive, usar 'i' apos a expressão
 db.pokemon.find( {name: /^pi/i} ).pretty() 
+
+
+
+
+consultas para arrays => $in ou $nin -> [<>, <>] = um ou outro
+
+db.pokemon.find( {defense: {$in: [80, 90]}}, {_id: false, name: true, defense: 1} )
+
+ignorando case sensitive:
+db.pokemon.find( {name: {$in: [/^pi/i, /^pu/i]}}, {_id: false, name: true} ).pretty()
+
+contagem:
+db.pokemon.find( {name: {$in: ["Pichu", "Pikachu"]}} ).pretty().count()
