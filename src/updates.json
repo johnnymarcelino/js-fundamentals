@@ -1,0 +1,83 @@
+// trabalhando com updates: set and unset
+
+db.pokemon.updateMany( { name: /^o/i }, { $set: { comeca com letra o: true}}) 
+
+db.pokemon.updateMany( { name: /^o/i }, { $unset: { startWithO: "Não importa o tipo dessa informação"}})  
+
+
+// valores updates com mul e inc
+
+db.pokemon.updateMany( { types: /fire/i }, {$mul: {attack: 3}})
+
+db.pokemon.updateMany( { types: /fire/i }, {$inc: {attack: -10}})  
+
+db.pokemon.updateMany( { types: /fire/i }, {$inc: {attack: 10}}) 
+
+// trabalhando com min e max: impor limites aos docs
+
+// - duas opções de modificar
+// a primeira com query e mais basica
+db.pokemon.updateMany( { types: /fire/i, attack: {$gte: 150}}, {$set: {attack: 150}})
+
+// a segunda com max e/ou min, mais completa
+db.pokemon.updateMany( {}, { $max: { attack: 75 }}) 
+
+db.pokemon.updateMany( { types: /fire/i }, { $min: { attack: 150 }})  
+
+// createAt "20223-03-06"
+// updateAt "20223-03-08"
+
+// dois tipos de metadata
+
+// - date: pode ser somente o padrão: {updateAt: true}
+// - timestamp: mais completo
+
+// currentDate: muito importante para trabalhar com datas
+
+db.pokemon.updateMany({ types: /bug/i },
+    {
+        $set: {
+            name: "É do tipo bug meeeesmo"
+            },
+            $currentDate: {
+                updatedAt: true
+            }
+        }
+    )
+
+db.pokemon.updateMany( { types: /bug/i }, {$set: {name: "É do tipo bug", $currentDate: {updateAt: }}}) 
+
+// tratamento de dados com: upsert
+
+// se o doc não existir na base de dados: cria um novo doc com as informações passsadas
+
+db.pokemon.updateOne(
+    { name: /chamander/i},
+    { $set: { attack: 85}},
+    { upsert: true }
+)
+
+// caso o doc ja exista na base, somente atualiza a informação passada
+db.pokemon.updateOne(
+    { name: "Johnnying"},
+    { $set: { attack: 380}},
+    { upsert: true }
+) 
+
+
+// regras para insert no upsert
+
+// - setOnInsert
+// em caso de update, o setoninsert é ignorado
+
+db.pokemon.updateOne(
+    { name: "Johnnying Novo"},
+    { $set: { attack: 380},
+        $setOnInsert: {
+            defense: 92,
+            hp: 38,
+            speed: 92
+        }
+    },
+    { upsert: true }
+) 

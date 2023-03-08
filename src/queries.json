@@ -41,21 +41,19 @@ db.pokemon.find( {$or: [
 
 
 - Exemplos:
-
 // "hp" > 80 E "defense" > 80
 // OU
 // "attack" > 80 E "speed" > 80
-
 // if((hp >= 80 && defense >= 80) || (attack >= 80 && speed >= 80))
 
 db.pokemon.find({
     $or: [
         {defense: {
             $gte: 80,
-        },
+            },
         hp: {
             gte: 80,
-        },
+            },
         },
         {
             attack: {
@@ -71,7 +69,6 @@ db.pokemon.find({
 
 // trabalhando com E em todos os setores
 // falha na requisição da query
-
 // db.pokemon.find({
 //     $or: [
 //         {
@@ -92,10 +89,7 @@ db.pokemon.find({
 //         },
 //     ]
 // })
-
-
 // trabalhando com ordenação - crescente = 1 ; descrescente = -1
-
 // - crescente/ascendente
 
 db.pokemon.find({     $or: [
@@ -114,21 +108,19 @@ db.pokemon.find({     $or: [
 // - decrescente/descendente
 
 db.pokemon.find({     $or: [
-    {defense: {             $gte: 80,
-        },         hp: {             gte: 80,
+        {defense: {             $gte: 80,
+            },         hp: {             gte: 80,
+            },
         },
-    },
-    {             attack: {                 $gte: 80,
-        },             speed: {                 $gte: 80,
+        {             attack: {                 $gte: 80,
+            },             speed: {                 $gte: 80,
+            },
         },
-    },
-]
+    ]
 }).pretty().sort({hp: -1
 }).count()
 
 // ordem nos filtros do sort faz toda a diferença no "desempate"
-
-
 // trabalhando com tamanho de "Sizes" nos arrays de apresentação
 
 db.pokemon.find({types: {$size: 2
@@ -137,40 +129,55 @@ db.pokemon.find({types: {$size: 2
 {_id: 0, name: 1, types: 1
 })
 
-db.pokemon.find({types: {$all: ["Poison", "Rock"]}}, {_id: 0, name: 1, attack: 1})
+db.pokemon.find({types: {$all: [
+            "Poison",
+            "Rock"
+        ]
+    }
+},
+{_id: 0, name: 1, attack: 1
+})
 
 // ou
 
-db.pokemon.find({types: {$all: ["Fire", "Rock"]}}, {_id: 0, name: 1, attack: 1})
+db.pokemon.find({types: {$all: [
+            "Fire",
+            "Rock"
+        ]
+    }
+},
+{_id: 0, name: 1, attack: 1
+})
 
 // não fundiona pois a query tem somente 2
-
 // db.pokemon.find({types: {$in: ["Fire", "Rock"]}}, {_id: 0, name: 1, attack: 1})
-
-
 // utilizndo mais de uma query com o mesmo resultado
 
 db.pokemon.find(
     {
-        $and: 
-        [
-            {types: "Flying"},
-            {types: "Bug"}
-        ]
+        $and: [
+        {types: "Flying"
+        },
+        {types: "Bug"
+        }
+    ]
 },
-{_id: 0, name: 1, types: 1})
+{_id: 0, name: 1, types: 1
+})
 
 // query with: lengendary
 
 db.pokemon.find(
     {
-        $and: 
-        [
-            {types: "Flying"},
-            {legendary: true}
-        ]
+        $and: [
+        {types: "Flying"
+        },
+        {legendary: true
+        }
+    ]
 },
-{_id: 0, name: 1, types: 1, legendary: 1})
+{_id: 0, name: 1, types: 1, legendary: 1
+})
 
 // - a mesma query, porem sintaxe diferente
 // operador logico já está implicitamente declarado
@@ -178,10 +185,14 @@ db.pokemon.find(
 db.pokemon.find({
         types: "Flying",
         legendary: true
-    },
-{_id: 0, name: 1, types: 1, legendary: 1})
+},
+{_id: 0, name: 1, types: 1, legendary: 1
+})
 
 
 // dot annotation
 
-db.pokemon.find({ "battle_points.hp": {lte: 40}}).pretty()
+db.pokemon.find({
+    "battle_points.hp": {lte: 40
+    }
+}).pretty()
