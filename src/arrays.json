@@ -1,0 +1,335 @@
+// trabalhando com arrays
+
+// atualizar elementos
+
+"field.$" -> atualizar o elemento que deu match
+"field.$[]" -> atualizar todos os elemento do Array
+
+db.pokemon.updateOne({_id: 1, types: "Lasanha3"}, {$set: {"types.$": "Lasanha1"}}) 
+
+
+// adicionando elementos:
+
+// db.collection.updateOne(
+//     {_id: 1},
+//     {
+//         $push: {
+//             types: "Lasanha"
+//         }
+//     }
+// )
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {
+        $push: {
+            types: "Lasanha"
+        }
+    }
+)
+
+
+db.pokemon.updateOne({_id: 1}, {$push: {types: "Lasanha4"}}) 
+
+
+
+// adicionando mais de um elemento arrays
+
+// utilizando o operador $each - para o final da fila
+
+db.collection.updateOne(
+    {_id: 1},
+    {$push: {
+        types: {$each: [
+            "Hotdog", "Hamburger", "Sorvete"
+        ]}
+    }},
+)
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {$push: {
+        types: {$each: [
+            "Hotdog", "Hamburger", "Sorvete"
+        ]}
+    }},
+)
+
+
+// utilizando o operador $each - para uma posição especificada da fila
+
+db.collection.updateOne(
+    {_id: 1},
+    {$push: {
+        types: {$each: [
+            "Hotdog", "Hamburger", "Sorvete"
+        ]}
+    }},
+)
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {$push: {
+        types: {
+            $each: [ "Hotdog", "Hamburger", "Sorvete"],
+            $position: 2
+        }
+    }},
+)
+
+// prevenindo inserções duplicadas em arrays com $addToSet
+
+// utilizando - $addToSet
+
+// somente um elemtento
+db.collection.updateOne(
+    {_id: 1},
+    {
+        $addToSet:
+            {
+                types: "Hamburger"
+            }
+    }
+)
+
+// varios elementos
+db.pokemon.updateOne(
+    {_id: 1},
+    {
+        $addToSet:
+            {
+                types: {
+                    $each:[
+                        "Hamburger", "lasanha", "banana", "Sorvete"
+                    ]
+                }
+            }
+    }
+)
+
+// ordenação de valores do campo por ordem especificada
+
+// funciona somente com o operador push -> $push
+db.collection.updateOne(
+    {_id: 1},
+    {$push: { types: {
+                $each: [],
+                $sort: 1
+            }
+        }
+    }
+)
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {$push: { types: { 
+                $each: ["Batata frita"],
+                $sort: -1  // ordem decrescente
+            }
+        }
+    }
+)
+
+
+
+// trabalhando com remoção de elementos
+
+// utilizando - $slice
+
+db.collection.updateOne(
+    {_id: 1},
+    {$push: {
+        types: {
+            $each: [],
+            $slice: 5
+        }
+    }}
+)
+
+// mantem os 2 últimos
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {$push: {
+        types: {
+            $each: [],  // array sem preenchimento, vai vazio
+            $slice: -2
+        }
+    }}
+)
+
+
+// utilizando $pop - remove o ultimno ou primeiro dependendo do parametro passado
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {$pop: {
+        types: 1
+        }
+    }
+)
+
+// trabalhando com pull
+
+// utilizando $pull
+
+db.collection.updateOne(
+    {_id: 1},
+    {
+        $pull: {
+            types: {$in: ["Hamburger", "lasanha"]},  // operador $in -> conceito de lista
+            notas: {$gte: 6},  // lte: 9
+        },
+    }
+)
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {$pull: {
+        types: "Hamburger"
+    }}
+)
+
+// utilizando o $pullAll
+
+db.collection.updateOne(
+    {_id: 1},
+    {
+        $pullAll: {
+            types: ["Hamburger", "lasanha"],  // pullAll não trabalha com queries - passar somente a lista
+        },
+    }
+)
+
+db.pokemon.updateOne(
+    {_id: 1},
+    {$pull: {
+        types: "banana"
+    }}
+)
+// para tarefas simples, recomenda-se pullAll
+// para trabalhos mais complexos, recomenda-se pull com as queries especificadas dos valores desejados
+
+$push -> inserir um elemento
+$pop -> remover um elemento de uma das extremidades
+$pull -> remove o que se define através de uma query
+$pullAll -> remove todos de uma lista passada 
+
+
+
+// trabalhando com arrays em documentos
+
+// inserção de documentos
+
+db.pokemon.updateOne(
+    { _id: 1 },
+    { 
+        $set: {
+            types: [
+                { name: "Fire", bonus_points: 45, weakness: "Water" },
+                { name: "Rock", bonus_points: 12, weakness: "Paper" },
+                { name: "Bug", bonus_points: 14, weakness: "Chinelão" }
+            ],
+        }
+    }
+)
+
+db.collection.updateOne(
+    {_id: 1, "<nome_do_array>.<chave_do_objeto>": "<valor>"},
+    {
+        $set: {
+            "<mesmo_nome_do_array>.<$'placeholder_do_match'>.<chave_do_objeto>": "novo valor"
+        }
+    }
+)
+
+// para alterar o campo existente
+
+db.pokemon.updateOne(
+    {_id: 1, "types.name": "Fire"},
+    {
+        $set: {
+            "types.$.name": "novo valor"
+        }
+    }
+)
+
+// para alterar o campo
+
+db.pokemon.updateOne(
+    {_id: 1, "types.weakness": "Water"},
+    {
+        $set: {
+            "types.$.outro_campo": "novo campo valor"
+        }
+    }
+)
+
+// remover o campo desejado
+
+db.pokemon.updateOne(
+    {_id: 1, "types.outro_campo": "novo campo"},
+    {
+        $unset: {
+            "types.$.outro_campo": true
+        }
+    }
+)
+
+db.pokemon.updateOne(
+    {_id: 1, "types.name": "novo valor"},
+    {
+        $unset: {
+            "types.$.outro_campo": true
+        }
+    }
+)
+
+
+// trabalhando com ordenação
+
+// utilizando sort em objetos -> embeded documents
+db.collection.updateOne(
+    {_id: 1},
+    {
+        $push: {
+            types: {
+                $each: [],  // caso não queira alterar valores dentro dos arrays
+                $sort: {
+                    bonus_points: 1,  // <- ordem ascendente (1), ou decrescente (-1)
+                    weakness: -1  // critério de desempate
+                }
+            }
+        }
+    }
+)
+// (<curson>).sort({filter: "valor"}, {filter: "value"})
+db.pokemon.updateOne(
+    {_id: 1},
+    {
+        $push: {
+            types: {
+                $each: [],
+                $sort: {
+                    bonus_points: 1,
+                }
+            }
+        }
+    }
+)
+
+// trabalhando com matrizes alinhandas -> nested arrays
+
+// revisão de inserção
+db.pokemon.updateOne(
+    {_id: 1, "types.name": "Rock"},
+    {
+        $set: {
+            "types.$.strong_aganst": ["Ice", "Bug", "Poison"]  // array de nivel dois
+        }
+    }
+)
+// ALERT: MONGODB NÃO SUPORTA UPDATES ACIMA DO PRIMEIRO NIVEL DE ARRAYS -> ARRAYS DENTRO DE ARRAYS
+// - SOMENTE TRANTANDO OS ARRAYS DO PRIMEIRO NIVEL, E NÃO DO SEGUNDO NIVEL
+// SOMENTE FAZENDO O INSERT -> OU SEJA, MODIFICANDO TODOS OS DADOS DO DOC ESPECIFICADO
+
