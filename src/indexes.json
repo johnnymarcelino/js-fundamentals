@@ -1,0 +1,149 @@
+db.pokemon.find({},
+{name: 1, attack: 1
+}).skip(200)
+
+{
+    "_id": 201,
+    "name": "Sudowoodo",
+    "attack": 100
+}                                                                   
+{
+    "_id": 202,
+    "name": "Politoed",
+    "attack": 75
+}                                                                     
+{
+    "_id": 203,
+    "name": "Hoppip",
+    "attack": 75
+}                                                                       
+{
+    "_id": 204,
+    "name": "Skiploom",
+    "attack": 75
+}                                                                     
+{
+    "_id": 206,
+    "name": "Aipom",
+    "attack": 75
+}                                                                        
+{
+    "_id": 205,
+    "name": "Jumpluff",
+    "attack": 75
+}                                                                     
+{
+    "_id": 217,
+    "name": "Unown",
+    "attack": 75
+}                                                                        
+{
+    "_id": 215,
+    "name": "Slowking",
+    "attack": 75
+}                                                                     
+{
+    "_id": 216,
+    "name": "Misdreavus",
+    "attack": 75
+}                                                                  
+{
+    "_id": 211,
+    "name": "Quagsire",
+    "attack": 85
+}                                                                     
+{
+    "_id": 214,
+    "name": "Murkrow",
+    "attack": 85
+}                                                                      
+{
+    "_id": 207,
+    "name": "Sunkern",
+    "attack": 75
+}                                                                      
+{
+    "_id": 208,
+    "name": "Sunflora",
+    "attack": 75
+}                                                                     
+{
+    "_id": 218,
+    "name": "Wobbuffet",
+    "attack": 75
+}                                                                    
+{
+    "_id": 219,
+    "name": "Girafarig",
+    "attack": 80
+}
+{
+    "_id": 222,
+    "name": "Dunsparce",
+    "attack": 75
+}
+{
+    "_id": 223,
+    "name": "Gligar",
+    "attack": 75
+}
+{
+    "_id": 212,
+    "name": "Espeon",
+    "attack": 75
+}                                                     
+{
+    "_id": 243,
+    "name": "comeca com a letra o",
+    "attack": 105
+}
+{
+    "_id": 244,
+    "name": "Delibird",
+    "attack": 75
+}
+
+// solução para o problema de buscas
+
+// auxilio de tabelas
+// Tabala: Attack
+attack -> localização (ou id)  // aponta para a localização 
+75 -> 202
+...
+85 -> 211
+85 -> 214
+...
+
+// Tabela: Name
+name -> localização
+Aipon -> 206
+Espero -> 212
+...
+Umbreon -> 213
+...
+
+// realizar a busca binaria: divide na metade o tabela ordenada por x/y/z e realiza a logica
+
+db.pokemon.find(
+    {name: "Umbreon"}
+).explain()  // explicação do modo realizado a busca
+
+// utilizando o _id -> busca muito mais eficiente
+
+db.pokemon.find(
+    {_id: 240}
+).explain("executionStats")  // explicação completa do modo realizado a busca e informações de tempo
+// caso surgir duvidas sobre o porquê e busca está tão lenta, com o executionStats
+
+// utilizando createindex e getindexes
+
+db.pokemon.getIndexes()  // obtem todos os indexes disponiveis
+
+// criar novo index
+db.pokemon.createIndex({name: 1})
+
+// alterar o nome do index
+db.pokemon.createIndex({name: 1}, {name: "meu_index"}) // apesar de o mongo criar, geralmente devs mantêm
+
+// filtrar nas buscas de forma mais eficaz
+db.pokemon.find({attack: {$gte: 85}}).explain("executionStats") 
