@@ -81,3 +81,52 @@ db.pokemon.updateOne(
     },
     { upsert: true }
 ) 
+
+
+// trabalhando com metodos findoneandupdate and findandmodify
+
+// findOneAndUpdate
+// retorna o documento antigo
+db.pokemon.findOneAndUpdate(
+    {_id: 256},
+    {
+        $set: {
+            using_find_one_and_update: true
+        }
+    }
+)
+
+// retorna o documento novo
+db.pokemon.findOneAndUpdate(
+    {_id: 258},
+    {
+        $set: {
+            using_find_one_and_update: true
+        }
+    },
+    {
+        returnNewDocument: true
+    }
+)
+
+// findAndModify - maneira mais verbosa
+// retorna doc antigo
+db.pokemon.findAndModify(
+    {
+        query: { _id: 547 },
+        update: { $set: {using_find_and_modify: true }},
+        new: true
+    }
+)
+
+// modify =! update
+// com o modify, podemos remover e muito mais, alem do update
+// - remove o documento
+
+db.pokemon.findAndModify(
+    {
+        query: { _id: 547 },
+        remove: true
+    }
+)
+
