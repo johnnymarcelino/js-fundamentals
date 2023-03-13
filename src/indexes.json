@@ -147,3 +147,182 @@ db.pokemon.createIndex({name: 1}, {name: "meu_index"}) // apesar de o mongo cria
 
 // filtrar nas buscas de forma mais eficaz
 db.pokemon.find({attack: {$gte: 85}}).explain("executionStats") 
+
+
+// explain -> executionStats - Regex
+
+{
+    "queryPlanner": {
+        "plannerVersion": 1,
+        "namespace": "pokemon_center.pokemon",
+        "indexFilterSet": false,
+        "parsedQuery": {
+            "name": {
+                "$regex": "^R"
+            }
+        },
+        "winningPlan": {
+            "stage": "FETCH",
+            "inputStage": {
+                "stage": "IXSCAN",
+                "keyPattern": {
+                    "name": 1
+                },
+                "indexName": "name_1",
+                "isMultiKey": false,
+                "multiKeyPaths": {
+                    "name": []
+                },
+                "isUnique": false,
+                "isSparse": false,
+                "isPartial": false,
+                "indexVersion": 2,
+                "direction": "forward",
+                "indexBounds": {
+                    "name": [
+                        "[\"R\", \"S\")",
+                        "[/^R/, /^R/]"
+                    ]
+                }
+            }
+        },
+        "rejectedPlans": []
+    },
+    "executionStats": {
+        "executionSuccess": true,
+        "nReturned": 25,
+        "executionTimeMillis": 0,
+        "totalKeysExamined": 26,
+        "totalDocsExamined": 25,
+        "executionStages": {
+            "stage": "FETCH",
+            "nReturned": 25,
+            "executionTimeMillisEstimate": 0,
+            "works": 27,
+            "advanced": 25,
+            "needTime": 1,
+            "needYield": 0,
+            "saveState": 0,
+            "restoreState": 0,
+            "isEOF": 1,
+            "docsExamined": 25,
+            "alreadyHasObj": 0,
+            "inputStage": {
+                "stage": "IXSCAN",
+                "nReturned": 25,
+                "executionTimeMillisEstimate": 0,
+                "works": 27,
+                "advanced": 25,
+                "needTime": 1,
+                "needYield": 0,
+                "saveState": 0,
+                "restoreState": 0,
+                "isEOF": 1,
+                "keyPattern": {
+                    "name": 1
+                },
+                "indexName": "name_1",
+                "isMultiKey": false,
+                "multiKeyPaths": {
+                    "name": []
+                },
+                "isUnique": false,
+                "isSparse": false,
+                "isPartial": false,
+                "indexVersion": 2,
+                "direction": "forward",
+                "indexBounds": {
+                    "name": [
+                        "[\"R\", \"S\")",
+                        "[/^R/, /^R/]"
+                    ]
+                },
+                "keysExamined": 26,
+                "seeks": 2,
+                "dupsTested": 0,
+                "dupsDropped": 0
+            }
+        }
+    },
+    "serverInfo": {
+        "host": "DESKTOP-O4TMJU5",
+        "port": 27017,
+        "version": "4.4.18",
+        "gitVersion": "8ed32b5c2c68ebe7f8ae2ebe8d23f36037a17dea"
+    },
+    "ok": 1
+}
+
+// buscando queries com regex
+
+db.pokemon.find( {name: /^R/, attack: {$gte: 70}}).explain("executionStats")
+
+// compound indexes - indexes com mais de um field
+
+db.pokemon.createIndex({name: 1, attack: 1})  // duplo
+
+db.pokemon.createIndex({attack: 1, name: 1})  // duplo
+
+// utilizando com hint
+// força utilizar o index passado, como dica para trabalhar com o desejado
+
+db.pokemon.find( 
+    {name: /^R/, 
+    attack: {$gte: 100}
+    })
+    .hint({name: 1, 
+    attack: 1})
+    .explain("executionStats")
+
+
+// deletando indexes com dropIndex("nome")
+
+db.pokemon.dropIndex("name_1_attack_1")
+
+// compondo indexes com elegancia
+
+db.pokemon.createIndex( 
+{
+    attack: 1, defense: -1},
+     {name: "fortes_pouca_defesa"} )
+
+db.pokemon.find({attack: {$gte: 85}, defense: {$lte: 50} }).count() 
+
+db.pokemon.find({attack: {$gte: 85}, 
+    defense: {$lte: 50} })
+    .hint({attack: 1, defense: 1})
+    .explain("executionStats") 
+
+// não há necessidades de ter dois indexes com o mesmo primeiro campo de querie iguais, poois mongodb faz as buscas através do mais simples e primeiro campo é analisado
+
+// exemplo
+db.pokemon.createIndex( {attack: 1, defense: -1}, {name: "fortes_pouca_defesa"} ) // primeiro campo com attack
+db.pokemon.createIndex( {attack: 1, defense: 1}, {name: "fortes_pouca_defesa_2"} ) // primeiro campo com attack
+
+// utilizando com Multikey indexes
+
+db.pokemon.find({types: "Fighting"}).explain("executionStats")  // mesma coisa para criação de index em array
+
+// utilizando funções
+
+// função dominó
+function domino() {
+    for (let x = 0; x <= 6; x++) {
+      for (let y = 0; y <= x; y++) {
+        db.domino.insert({
+          piece: [x, y
+                ],
+            });
+        }
+    }
+}
+
+// invoca a função depois de criada
+domino()
+
+// encontra a chave desejada com array e sem _id
+db.domino.find({piece: [6,6]}, {_id: 0}) 
+
+db.domino.find({piece: 2})  // todas as peças que tem o 2
+db.domino.find({piece: {$all: [4, 5]}})  // a peça que tem o 4 e 5 ou 5 e 4, todos esses elementos
+
