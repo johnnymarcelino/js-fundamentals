@@ -326,3 +326,49 @@ db.domino.find({piece: [6,6]}, {_id: 0})
 db.domino.find({piece: 2})  // todas as peças que tem o 2
 db.domino.find({piece: {$all: [4, 5]}})  // a peça que tem o 4 e 5 ou 5 e 4, todos esses elementos
 
+// funcionalidades da multikey
+
+{"piece":[0,0]}
+{"piece":[1,0]}
+{"piece":[1,1]}
+{"piece":[2,0]}
+{"piece":[2,1]}
+{"piece":[2,2]}
+{"piece":[3,0]}
+{"piece":[3,1]}
+{"piece":[3,2]}
+{"piece":[3,3]}
+{"piece":[4,0]}
+{"piece":[4,1]}
+{"piece":[4,2]}
+{"piece":[4,3]}
+{"piece":[4,4]}
+{"piece":[5,0]}
+{"piece":[5,1]}
+{"piece":[5,2]}
+{"piece":[5,3]}
+{"piece":[5,4]}
+{"piece":[5,5]}
+{"piece":[6,0]}
+{"piece":[6,1]}
+{"piece":[6,2]}
+{"piece":[6,3]}
+{"piece":[6,4]}
+{"piece":[6,5]}
+{"piece":[6,6]}
+
+// funcionamento do index pelo mongo
+
+// exemplo incompleto
+Piece -> Linha
+0 -> 1
+0 -> 2
+0 -> 4
+0 -> 7
+1 -> 2
+1 -> 3
+1 -> 5
+2 -> 4
+2 -> 5
+2 -> 6
+3 -> 7
