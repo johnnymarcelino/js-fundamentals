@@ -1,0 +1,13 @@
+{
+    "first_pokemon": "Larvitar",
+    "Second_pokemon": "Nuzleaf",
+    "Winner": "Nuzleaf"
+}
+
+// funciona dessa maneira
+// aggregate
+// [{stage1}, {stage1}, ...]
+
+// comando de aggregation
+
+db.combats.aggregate([]) 
