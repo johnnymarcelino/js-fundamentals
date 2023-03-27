@@ -11,3 +11,40 @@
 // comando de aggregation
 
 db.combats.aggregate([]) 
+
+
+// trabalhando com stage de join
+
+// primeira busca
+
+db.combats.aggregate([
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "First_pokemon",
+            foreignField: "_id",
+            as: "pokemon1"
+        }
+    }
+])
+
+// resultado da primeira querie
+
+{
+    "_id":"ObjectId(""641b32c9f478f5aa2d62c048"")",
+    "First_pokemon":302,
+    "Second_pokemon":31,
+    "Winner":31,
+    "pokemon1":
+    [
+        {"_id":302,"types":["Water","Flying"],
+        "name":"Wingull",
+        "legendary":false,
+        "hp":40,
+        "attack":75,
+        "defense":30,
+        "speed":85,
+        "generation":3}
+    ]
+}
+
