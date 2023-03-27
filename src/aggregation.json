@@ -48,3 +48,139 @@ db.combats.aggregate([
     ]
 }
 
+// segunda busca
+
+// utilizando dois stages -> as
+
+db.combats.aggregate([
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "First_pokemon",
+            foreignField: "_id",
+            as: "pokemon1"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Second_pokemon",
+            foreignField: "_id",
+            as: "pokemon2"
+        }
+    }
+]).pretty()
+
+// cada stage faz uma busca diferente com dados diferentes
+
+// fazendo para winner
+
+db.combats.aggregate([
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "First_pokemon",
+            foreignField: "_id",
+            as: "pokemon1"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Second_pokemon",
+            foreignField: "_id",
+            as: "pokemon2"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Winner",
+            foreignField: "_id",
+            as: "winner"
+        }
+    },
+    {
+        $project: {  // elimina queries sobre pokemon1 -> não aparece
+            // pokemon1: 0,  // elimina queries sobre pokemon1 -> não aparece
+            _id: 0  // elimina queries sobre pokemon1 -> não aparece
+        }
+    }
+]).pretty()
+
+// operador que não uma stage é tratado como função - possivel erro sem passar dados: parametros incompletos
+
+db.combats.aggregate([
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "First_pokemon",
+            foreignField: "_id",
+            as: "pokemon1_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Second_pokemon",
+            foreignField: "_id",
+            as: "pokemon2_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Winner",
+            foreignField: "_id",
+            as: "winner"
+        }
+    },
+    {
+        $project: {  
+            pokemon1: {
+                $arrayElemAt: ["$pokemon1_arr", 0]
+            }
+        }
+    }
+]).pretty()
+
+// remodelando dados
+
+db.combats.aggregate([
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "First_pokemon",
+            foreignField: "_id",
+            as: "pokemon1_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Second_pokemon",
+            foreignField: "_id",
+            as: "pokemon2_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Winner",
+            foreignField: "_id",
+            as: "winner"
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            winner: 1,  
+            pokemon1: {
+                $arrayElemAt: ["$pokemon1_arr", 0]
+            },
+            pokemon2: {
+                $arrayElemAt: ["$pokemon2_arr", 0]
+            }
+        }
+    }
+]).pretty()
