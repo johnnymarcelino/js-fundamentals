@@ -184,3 +184,122 @@ db.combats.aggregate([
         }
     }
 ]).pretty()
+
+
+// trabalhando com operador -> $cond
+
+db.combats.aggregate([
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "First_pokemon",
+            foreignField: "_id",
+            as: "pokemon1_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Second_pokemon",
+            foreignField: "_id",
+            as: "pokemon2_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Winner",
+            foreignField: "_id",
+            as: "winner"
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            winner: 1,  
+            pokemon1: {
+                $arrayElemAt: ["$pokemon1_arr", 0]
+            },
+            pokemon2: {
+                $arrayElemAt: ["$pokemon2_arr", 0]
+            }
+        }
+    },
+    {
+        $project: {
+            winner: {
+                $cond: {
+                    // condição   -> pseudocodigo como parametros 
+                    // seForVerdade  -> pseudocodigo como parametros 
+                    // seForFalso  -> pseudocodigo como parametros
+                    // metodo de funcionamento:
+                    // if,
+                    // then,
+                    // else
+                    if: {
+                        $eq: ["$Winner", "$pokemon._id"]  // comparação
+                    },
+                    then: "$pokemon1.name",
+                    else: "$pokemon2.name"
+                }
+            }
+        }
+    }
+]).pretty()
+
+
+// tratando queries de forma mais complexa
+
+db.combats.aggregate([
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "First_pokemon",
+            foreignField: "_id",
+            as: "pokemon1_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Second_pokemon",
+            foreignField: "_id",
+            as: "pokemon2_arr"
+        }
+    },
+    {
+        $lookup: {
+            from: "pokemon",
+            localField: "Winner",
+            foreignField: "_id",
+            as: "winner"
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            winner: 1,  
+            pokemon1: {
+                $arrayElemAt: ["$pokemon1_arr", 0]
+            },
+            pokemon2: {
+                $arrayElemAt: ["$pokemon2_arr", 0]
+            }
+        }
+    },
+    {
+        $project: {
+            first_pokemon: "$pokemon1.name",
+            second_pokemon: "$pokemon2.name",
+            winner: {
+                $cond: {
+                    if: {
+                        $eq: ["$Winner", "$pokemon._id"]
+                    },
+                    then: "$pokemon1.name",
+                    else: "$pokemon2.name"
+                }
+            }
+        }
+    }
+]).pretty()

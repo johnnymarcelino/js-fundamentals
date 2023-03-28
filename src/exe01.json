@@ -1,0 +1,31 @@
+// EXERCICIO 01
+
+// Quais são filmes que foram adicionados até 2010?
+
+db.netflix.find({
+    release_year: {
+        $lte: 2010
+    }
+})
+
+db.netflix.count({
+    release_year: {
+        $lte: 2010
+    }
+})
+
+
+db.netflix.aggregate([
+    {
+        $match: {
+            date_added: {
+                $lte: ISODate("2010-12-31"),
+                $gte: ISODate("2009-01-01")
+            }
+        }
+    }
+])
+
+// EXERCICIO 02
+
+
