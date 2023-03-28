@@ -26,6 +26,26 @@ db.netflix.aggregate([
     }
 ])
 
+
+// trabalhando com operadores addFields, $limit e $year -> temos 3 notações simbolo dollar, que determina: stage, operador e referencia
+
 // EXERCICIO 02
 
+db.netflix.aggregate([
+    {
+        $addFields: {
+            year_added: {
+                $year: "$date_added"
+            }
+        }
+    },
+    {
+        $match: {
+            year_added: {
+                $lte: 2010
+            }
+            }
+        }
+    }
+]).pretty()
 
